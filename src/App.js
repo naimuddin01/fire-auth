@@ -15,6 +15,7 @@ function App() {
     photo: ''
 
   })
+  console.log("user",user)
   
   //google signIn er maddome korte hole ekta provider lage(jeta bole debe ei email ta authenticated)
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -36,7 +37,7 @@ function App() {
       console.log(err.message);
     })
   }
-  // console.log("setUser",user) ////eikhane res.user er data gulo setUser() e set kora hosse sei data gulo payo jasse user state e
+  // console.log("after sign in button clicked User State",user) ////eikhane res.user er data gulo setUser() e set kora hosse sei data gulo payo jasse user state e
 
   const handelSignOut = () => {
     //signOut() ta firebase.auth er ekta function
@@ -59,7 +60,7 @@ function App() {
     .catch(arr => {
     })
   }
-  // console.log('signOut user',user)//eikhane state er object maan gulo empty hoye jabe (signedOutUser) er jonno
+  // console.log('after signOut button clicked User State',user)//eikhane state er object maan gulo empty hoye jabe (signedOutUser) er jonno
 
 
 
@@ -113,14 +114,16 @@ function App() {
     // console.log(newUserInfo);
     // console.log(e.target.name, e.target.value);
   }
+  // console.log('after fillUp the from and Create Account button clicked User State',user)
+
+
 
   const createAcount = (event) => {
-
     // console.log("createAcount", user.name, user.password)//handleChange er maan gulo (user state) e pasce
     
     //user State er isValid jothy true hoy tahole if er vitorer duckbe
     if(user.isValid){
-      console.log("data seve setUser",user.email, user.password); 
+      // console.log("data seve setUser",user.email, user.password); 
       //(createUserWithEmailAndPassword) er maddome firebase e (email & password) pathasce
       firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
       .then(res =>{
@@ -155,19 +158,19 @@ function App() {
   const signInUser = event => {
 
     //inputtag e je email and password disce
-    console.log("userState",user.email, user.password);
-    console.log("userState", user)
+    // console.log("userState",user.email, user.password);
+    // console.log("userState", user)
 
     if(user.isValid){
       //sign in korar jonno firebase e data thake user r password niye
       firebase.auth().signInWithEmailAndPassword(user.email, user.password)
       .then(res =>{
-        console.log("res", res)
+        // console.log("res", res)
         const createdUser = {...user}
         createdUser.isSignedIn = true;
         createdUser.error = '';
         setUser(createdUser);
-        console.log("userState", user)
+        // console.log("userState", user)
       })
       .catch(err =>{
           console.log(err.message);
@@ -176,14 +179,13 @@ function App() {
           createdUser.error = err.message;
           setUser(createdUser);
       })
-      console.log("userState2", user)
+      console.log("enter signIn method userState2", user) //eikhane usesete e isSignedIn= false
     }
-
-
-    
+    console.log("enter signIn method userState3", user) //eikhane usesete e isSignedIn= false
     event.preventDefault();
     event.target.reset();
   }
+  console.log('after signIn button data from fireBase clicked User State',user) //eikhane usesete e isSignedIn= true
 
   return (
     <div className="App">
